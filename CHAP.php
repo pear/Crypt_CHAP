@@ -219,7 +219,7 @@ class Crypt_MSCHAPv1 extends Crypt_CHAP
      */  
     function _challengeResponse()
     {
-        require_once 'Crypt_CHAP/_des.php';
+        require_once 'Crypt/CHAP_DES.php';
         
         $nthash = $this->ntPasswordHash();        
         while (strlen($nthash) < 21) {
