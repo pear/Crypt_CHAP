@@ -34,7 +34,7 @@ For MS-CHAP the mhash extension must be loaded.
       <dir name="/" baseinstalldir="Crypt">
         <file role="php" name="CHAP.php"/>
         <file role="php" name="CHAP_DES.php"/>
-        <dir name="tests">
+        <dir name="tests" baseinstalldir="Crypt">
           <file role="test" name="chaptest.php"/>            
         </dir>
       </dir>
