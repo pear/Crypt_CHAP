@@ -7,7 +7,7 @@ Currently these types of CHAP are supported:
 * CHAP-MD5
 * MS-CHAPv1
 * MS-CHAPv2
-For MS-CHAP the mhash extension must be loaded.
+For MS-CHAP the mhash and mcrypt extensions must be loaded.
 </description>
 
   <maintainers>
@@ -19,31 +19,45 @@ For MS-CHAP the mhash extension must be loaded.
     </maintainer>
   </maintainers>
   
-  <release>
-    <version>0.8.6</version>
-    <date>2003-11-04</date>
-    <license>BSD</license>
-    <state>alpha</state>
-    <notes>
+    <release>
+      <version>1.0.0</version>
+      <date>2004-03-25</date>
+      <license>BSD</license>
+      <state>stable</state>
+      <notes>
 <![CDATA[
-* Eliminated notices (Bug #190).
-* Handle Passwords allways as Strings (Bug #193).
-* BugFix: lmPasswordHash() wrong DES-Hashing (Bug #41).
+* Replaced own DES functions with mcrypt
 ]]>
-    </notes>
-  </release>   
+      </notes>
+    </release>
 
   <filelist>
     <dir name="/" baseinstalldir="Crypt">
       <file role="php" name="CHAP.php"/>
-      <file role="php" name="CHAP_DES.php"/>
       <dir name="tests" baseinstalldir="Crypt">
         <file role="test" name="chaptest.php"/>            
       </dir>
     </dir>
   </filelist>
 
+  <deps>
+    <dep type="ext" rel="has" optional="yes">mhash</dep>
+    <dep type="ext" rel="has" optional="yes">mcrypt</dep>
+  </deps>
+
   <changelog>
+
+    <release>
+      <version>1.0.0</version>
+      <date>2004-03-25</date>
+      <license>BSD</license>
+      <state>stable</state>
+      <notes>
+<![CDATA[
+* Replaced own DES functions with mcrypt
+]]>
+      </notes>
+    </release>
 
     <release>
       <version>0.8.6</version>

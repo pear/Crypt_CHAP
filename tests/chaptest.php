@@ -56,7 +56,7 @@ printf ("ChallResp : %s\nexpected  : d39bfaf5d6855a948c8c81a85947502c\n", bin2he
 echo "\n";
 
 echo "MS-CHAPv1 str2unicode\n";
-$crpt = new Crypt_MSCHAPv1;
+$crpt = new Crypt_CHAP_MSv1;
 printf("Passed 123 as Number:%s\n", bin2hex($crpt->str2unicode(123)));
 printf("Passed 123 as String:%s\n", bin2hex($crpt->str2unicode('123')));
 
@@ -73,7 +73,7 @@ printf ("LM Resp   : %s\nexpected  : 91881d0152ab0c33c524135ec24a95ee64e23cdc2d3
 echo "\n";
 
 echo "MS-CHAPv2 TEST\n";
-$crpt = new Crypt_MSCHAPv2;
+$crpt = new Crypt_CHAP_MSv2;
 $crpt->username = 'User';
 $crpt->password = 'clientPass';
 printf ("Username  : %s\nexpected  : 55736572\n", bin2hex($crpt->username));
