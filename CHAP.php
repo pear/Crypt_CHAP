@@ -35,7 +35,7 @@ any other GPL-like (LGPL, GPL2) License.
 require_once 'PEAR.php';
 
 /**
-* Classed for generating packets for various CHAP Protocols:
+* Classes for generating packets for various CHAP Protocols:
 * CHAP-MD5: RFC1994
 * MS-CHAPv1: RFC2433
 * MS-CHAPv2: RFC2759
@@ -197,6 +197,8 @@ class Crypt_MSCHAPv1 extends Crypt_CHAP
      */
     function str2unicode($str) 
     {
+        $uni = '';
+        $str = (string) $str;
         for ($i = 0; $i < strlen($str); $i++) {
             $a = ord($str{$i}) << 8;
             $uni .= sprintf("%X", $a);
@@ -282,7 +284,7 @@ class Crypt_MSCHAPv1 extends Crypt_CHAP
              $plain .= "\0";
         }
         
-        return $this->_desHash(substr($plain, 0, 7)) . $this->_desHash(substr($plain, 8, 7));
+        return $this->_desHash(substr($plain, 0, 7)) . $this->_desHash(substr($plain, 7, 7));
     }
     
     /**

@@ -48,6 +48,7 @@ function des_encrypt_ecb($key, $clearText)
         $blockCount++;  //Add another block for them
         $clearText = str_pad($clearText, $blockCount * 8, chr(0x00));  //Pad it out with zeroes
     }
+    $cypherText = '';
     for ($i = 0; $i < $blockCount; $i++) {  //Cycle through the blocks
         $clearBlock = substr($clearText, $i * 8, 8);  //Grab a block from the input
         $cypherBlock = des_block_encode(des_bits_to_bytes ($clearBlock), $keys);  //Encrypt it
@@ -76,6 +77,7 @@ function des_block_encode($clearText, $subKeys)
             34,  2, 42, 10, 50, 18, 58, 26,
             33,  1, 41,  9, 49, 17, 57, 25);
 
+    $ip = '';
     foreach ($ip_table as $bit) {
         $ip .= $clearText[$bit - 1];
     }
@@ -86,6 +88,7 @@ function des_block_encode($clearText, $subKeys)
         $r[$index] = des_xor($l[$index - 1], des_transform($r[$index - 1], $subKeys[$index]));
     }
 
+    $cypherBlock = '';
     foreach ($ip1_table as $bit) {
         $concat	= $r[16] . $l[16];
         $cypherBlock .= $concat[$bit - 1];
@@ -117,6 +120,7 @@ function des_make_subkeys($key)
             2, 2, 2, 2,
             1, 2, 2, 2,
             2, 2, 2, 1);
+    $k = '';
     foreach ($pc1 as $bit) {
         $k .= $key[$bit - 1];
     }
@@ -132,7 +136,7 @@ function des_make_subkeys($key)
     for ($i = 1; $i <= 16; $i++) {
         foreach ($pc2 as $bit) {
             $concat = $c[$i] . $d[$i];
-            $k[$i] .= $concat[$bit - 1];
+            @$k[$i] .= $concat[$bit - 1];
         }
     }
     return ($k);
@@ -200,9 +204,11 @@ function des_transform($data, $key)
             chr(0x01).chr(0x01).chr(0x00).chr(0x00), chr(0x01).chr(0x01).chr(0x00).chr(0x01),
             chr(0x01).chr(0x01).chr(0x01).chr(0x00), chr(0x01).chr(0x01).chr(0x01).chr(0x01));
 
+    $e = '';
     foreach ($e_table as $bit) {
         $e .= $data[$bit - 1];
     }
+    $sResult = '';
     $ek = des_xor($e, $key);
     for ($i = 0; $i < 8; $i++) {
         $offset = $i * 6;
@@ -214,6 +220,7 @@ function des_transform($data, $key)
             ord($ek[$offset + 5]) * 0x10;
         $sResult .= $nybbles[$s[$i][$sAddress]];
     }
+    $p = '';
     foreach ($p_table as $bit) {
         $p .= $sResult[$bit - 1];
     }
@@ -222,6 +229,7 @@ function des_transform($data, $key)
 
 function des_bits_to_bytes($bitStream) 
 {
+    $byteStream = '';
     for ($i = 0; $i < strlen($bitStream); $i++) {
         $val = ord($bitStream[$i]);
         if ($val & 0x80) {$byteStream .= chr(0x01);} else {$byteStream .= chr(0x00);}
@@ -238,6 +246,7 @@ function des_bits_to_bytes($bitStream)
 
 function des_bytes_to_bits($byteStream) 
 {
+    $bitStream = '';
     for ($i = 0; $i < (strlen($byteStream) / 8); $i++) {
         $offset	= $i * 8;
         $value = ord($byteStream[$offset]) * 0x80 +
@@ -260,6 +269,7 @@ function des_rotate_left($input, $positions)
 
 function des_xor($a, $b) 
 {
+    $xor = '';
     for ($i = 0; $i < strlen($a); $i++) {
         $xor .= $a[$i] ^ $b[$i];
     }
@@ -289,11 +299,13 @@ function des_add_parity($key)
         224,224,227,227,229,229,230,230,233,233,234,234,236,236,239,239,
         241,241,242,242,244,244,247,247,248,248,251,251,253,253,254,254);
 
+    $bin = '';
     for ($i = 0; $i < strlen($key); $i++) {
         $bin .= sprintf('%08s', decbin(ord($key{$i})));
     }
 
     $str1 = explode('-', substr(chunk_split($bin, 7, '-'), 0, -1));
+    $x = '';
     foreach($str1 as $s) {
         $x .= sprintf('%02s', dechex($odd_parity[bindec($s . '0')]));
     }

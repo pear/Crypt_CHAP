@@ -55,8 +55,12 @@ $crpt->challenge = pack('H*', '102DB5DF085D3041');
 printf ("ChallResp : %s\nexpected  : d39bfaf5d6855a948c8c81a85947502c\n", bin2hex($crpt->challengeResponse()));
 echo "\n";
 
-echo "MS-CHAPv1 TEST\n";
+echo "MS-CHAPv1 str2unicode\n";
 $crpt = new Crypt_MSCHAPv1;
+printf("Passed 123 as Number:%s\n", bin2hex($crpt->str2unicode(123)));
+printf("Passed 123 as String:%s\n", bin2hex($crpt->str2unicode('123')));
+
+echo "MS-CHAPv1 TEST\n";
 $crpt->password = 'MyPw';
 $crpt->challenge = pack('H*', '102DB5DF085D3041');
 $unipw = $crpt->str2unicode($pass);
