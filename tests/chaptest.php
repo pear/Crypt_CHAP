@@ -47,6 +47,14 @@ $crpt->challenge = pack('H*', '102DB5DF085D3041');
 printf ("ChallResp : %s\nexpected  : 8f028814450d66d94c72331ef455a172\n", bin2hex($crpt->challengeResponse()));
 echo "\n";
 
+echo "CHAP-MD5 TEST 2\n";
+$crpt = new Crypt_CHAP_MD5;
+$crpt->password = 'sepp';
+$crpt->chapid = 1;
+$crpt->challenge = pack('H*', '102DB5DF085D3041');
+printf ("ChallResp : %s\nexpected  : d39bfaf5d6855a948c8c81a85947502c\n", bin2hex($crpt->challengeResponse()));
+echo "\n";
+
 echo "MS-CHAPv1 TEST\n";
 $crpt = new Crypt_MSCHAPv1;
 $crpt->password = 'MyPw';
