@@ -34,7 +34,7 @@ any other GPL-like (LGPL, GPL2) License.
 
 ini_set('include_path', ini_get('include_path') . ':../../');
 
-require_once 'Crypt_CHAP/CHAP.php';
+require_once 'Crypt/CHAP.php';
 
 echo "CHAP-MD5 TEST\n";
 $crpt = new Crypt_CHAP_MD5;
