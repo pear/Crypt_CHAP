@@ -156,6 +156,13 @@ class Crypt_CHAP_MD5 extends Crypt_CHAP
 class Crypt_MSCHAPv1 extends Crypt_CHAP 
 {
     /**
+     * Wether using deprecated LM-Responses or not.
+     * 0 = use LM-Response, 1 = use NT-Response
+     * @var  bool
+     */
+    var $flags = 1;
+    
+    /**
      * Constructor
      *
      * Loads the mhash extension
@@ -198,7 +205,7 @@ class Crypt_MSCHAPv1 extends Crypt_CHAP
     }    
     
     /**
-     * Generates the response. 
+     * Generates the NT-Response. 
      *
      * @access public
      * @return string
@@ -209,27 +216,105 @@ class Crypt_MSCHAPv1 extends Crypt_CHAP
     }
     
     /**
+     * Generates the NT-Response. 
+     *
+     * @access public
+     * @return string
+     */  
+    function ntChallengeResponse() 
+    {
+        return $this->_challengeResponse(false);
+    }    
+    
+    /**
+     * Generates the LAN-Manager-Response. 
+     *
+     * @access public
+     * @return string
+     */  
+    function lmChallengeResponse() 
+    {
+        return $this->_challengeResponse(true);
+    }    
+    
+    /**
      * Generates the response. 
      *
      * This method inludes a file where des-encryption functions are implemented.
      * This is needed to be independent of the mcrypt extension.
      * 
+     * @param  bool  $lm  wether generating LAN-Manager-Response
      * @access private
      * @return string
      */  
-    function _challengeResponse()
+    function _challengeResponse($lm = false)
     {
         require_once 'Crypt/CHAP_DES.php';
         
-        $nthash = $this->ntPasswordHash();        
-        while (strlen($nthash) < 21) {
-            $nthash .= "\0";
+        if ($lm) {
+            $hash = $this->lmPasswordHash();
+        } else {
+            $hash = $this->ntPasswordHash();
         }
-        $resp1 = des_encrypt_ecb(substr($nthash, 0, 7), $this->challenge);
-        $resp2 = des_encrypt_ecb(substr($nthash, 7, 7), $this->challenge);
-        $resp3 = des_encrypt_ecb(substr($nthash, 14, 7), $this->challenge);
+
+        while (strlen($hash) < 21) {
+            $hash .= "\0";
+        }
+        $resp1 = des_encrypt_ecb(substr($hash, 0, 7), $this->challenge);
+        $resp2 = des_encrypt_ecb(substr($hash, 7, 7), $this->challenge);
+        $resp3 = des_encrypt_ecb(substr($hash, 14, 7), $this->challenge);
 
         return $resp1 . $resp2 . $resp3;
+    }
+    
+    /**
+     * Generates the LAN-Manager-HASH from the given plaintext password.
+     *
+     * @access public
+     * @return string
+     */
+    function lmPasswordHash($password = null)
+    {
+        $plain = isset($password) ? $password : $this->password;
+
+        $plain = substr(strtoupper($plain), 0, 14);
+        while (strlen($plain) < 14) {
+             $plain .= "\0";
+        }
+        
+        return $this->_desHash(substr($plain, 0, 7)) . $this->_desHash(substr($plain, 8, 7));
+    }
+    
+    /**
+     * Generates an irreversible HASH.
+     *
+     * @access private
+     * @return string
+     */
+    function _desHash($plain)
+    {
+        require_once 'Crypt/CHAP_DES.php';
+        return des_encrypt_ecb($plain, 'KGS!@#$%');
+    }
+    
+    /**
+     * Generates the response-packet. 
+     *
+     * @param  bool  $lm  wether including LAN-Manager-Response
+     * @access private
+     * @return string
+     */      
+    function response($lm = false)
+    {
+        $ntresp = $this->ntChallengeResponse();
+        if ($lm) {
+            $lmresp = $this->lmChallengeResponse();
+        } else {
+            $lmresp = str_repeat ("\0", 24);
+        }
+
+        // Response: LM Response, NT Response, flags (0 = use LM Response, 1 = use NT Response)
+        return $lmresp . $ntresp . pack('C', !$lm);
     }
 }
 

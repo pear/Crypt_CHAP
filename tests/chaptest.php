@@ -32,9 +32,12 @@ any other GPL-like (LGPL, GPL2) License.
     $Id$
 */
 
-ini_set('include_path', ini_get('include_path') . ':../../');
-
-require_once 'Crypt/CHAP.php';
+if ($argv[1] == 'pearcvs') {
+    ini_set('include_path', '..:' . ini_get('include_path'));
+    require_once 'CHAP.php';
+} else {
+    require_once 'Crypt/CHAP.php';
+}
 
 echo "CHAP-MD5 TEST\n";
 $crpt = new Crypt_CHAP_MD5;
@@ -51,7 +54,10 @@ $crpt->challenge = pack('H*', '102DB5DF085D3041');
 $unipw = $crpt->str2unicode($pass);
 printf ("Unicode PW: %s\nexpected  : 4d00790050007700\n", bin2hex($unipw));
 printf ("NT HASH   : %s\nexpected  : fc156af7edcd6c0edde3337d427f4eac\n", bin2hex($crpt->ntPasswordHash()));
-printf ("ChallResp : %s\nexpected  : 4e9d3c8f9cfd385d5bf4d3246791956ca4c351ab409a3d61\n", bin2hex($crpt->challengeResponse()));
+printf ("NT Resp   : %s\nexpected  : 4e9d3c8f9cfd385d5bf4d3246791956ca4c351ab409a3d61\n", bin2hex($crpt->challengeResponse()));
+printf ("LM HASH   : %s\nexpected  : 75ba30198e6d1975aad3b435b51404ee\n", bin2hex($crpt->lmPasswordHash()));
+printf ("LM Resp   : %s\nexpected  : 91881d0152ab0c33c524135ec24a95ee64e23cdc2d33347d\n", bin2hex($crpt->lmChallengeResponse()));
+//printf ("Response  : %s\nexpected  : unknown\n", bin2hex($crpt->response()));
 echo "\n";
 
 echo "MS-CHAPv2 TEST\n";

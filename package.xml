@@ -20,14 +20,14 @@ For MS-CHAP the mhash extension must be loaded.
   </maintainers>
   
   <release>
-    <version>0.8.2</version>
-    <date>2003-02-01</date>
+    <version>0.8.5</version>
+    <date>2003-02-15</date>
     <license>BSD</license>
     <state>alpha</state>
     <notes>
 <![CDATA[
-* CHAP-MD5 is stable
-* MS-CHAP is currently not completely implemented 
+* Added LAN-Manager support
+* Generate MS-CHAPv1 response-packet
 ]]>
     </notes>
     <filelist>
@@ -40,7 +40,21 @@ For MS-CHAP the mhash extension must be loaded.
       </dir>
     </filelist>
   </release>   
-  
+
+  <changelog>
+    <release>
+      <version>0.8.5</version>
+      <date>2003-02-15</date>
+      <state>alpha</state>
+      <notes>
+<![CDATA[
+* Added LAN-Manager support
+* Generate MS-CHAPv1 response-packet
+]]>
+      </notes>
+    </release>
+  </changelog>
+    
   <changelog>
     <release>
       <version>0.8.2</version>
