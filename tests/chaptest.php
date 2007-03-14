@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2003, Michael Bretterklieber <michael@bretterklieber.com>
+Copyright (c) 2003-2007, Michael Bretterklieber <michael@bretterklieber.com>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without 
@@ -31,8 +31,7 @@ any other GPL-like (LGPL, GPL2) License.
 
     $Id$
 */
-
-if ($argv[1] == 'pearcvs') {
+if ($_SERVER["argc"]>1 && $_SERVER["argv"][1] == 'pearcvs') {
     ini_set('include_path', '..:' . ini_get('include_path'));
     require_once 'CHAP.php';
 } else {
@@ -63,7 +62,7 @@ printf("Passed 123 as String:%s\n", bin2hex($crpt->str2unicode('123')));
 echo "MS-CHAPv1 TEST\n";
 $crpt->password = 'MyPw';
 $crpt->challenge = pack('H*', '102DB5DF085D3041');
-$unipw = $crpt->str2unicode($pass);
+$unipw = $crpt->str2unicode($crpt->password);
 printf ("Unicode PW: %s\nexpected  : 4d00790050007700\n", bin2hex($unipw));
 printf ("NT HASH   : %s\nexpected  : fc156af7edcd6c0edde3337d427f4eac\n", bin2hex($crpt->ntPasswordHash()));
 printf ("NT Resp   : %s\nexpected  : 4e9d3c8f9cfd385d5bf4d3246791956ca4c351ab409a3d61\n", bin2hex($crpt->challengeResponse()));
