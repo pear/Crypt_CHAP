@@ -20,13 +20,13 @@ For MS-CHAP the mhash and mcrypt extensions must be loaded.
   </maintainers>
   
     <release>
-      <version>1.0.0</version>
-      <date>2004-03-25</date>
+      <version>1.0.1</version>
+      <date>2007-03-14</date>
       <license>BSD</license>
       <state>stable</state>
       <notes>
 <![CDATA[
-* Replaced own DES functions with mcrypt
+* fix some warnings (test-script)
 ]]>
       </notes>
     </release>
@@ -46,6 +46,18 @@ For MS-CHAP the mhash and mcrypt extensions must be loaded.
   </deps>
 
   <changelog>
+
+    <release>
+      <version>1.0.1</version>
+      <date>2007-03-14</date>
+      <license>BSD</license>
+      <state>stable</state>
+      <notes>
+<![CDATA[
+* fix some warnings (test-script)
+]]>
+      </notes>
+    </release>
 
     <release>
       <version>1.0.0</version>
