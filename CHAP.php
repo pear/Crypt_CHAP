@@ -101,7 +101,6 @@ class Crypt_CHAP extends PEAR
     function generateChallenge($varname = 'challenge', $size = 8)
     {
         $this->$varname = '';
-        mt_srand(hexdec(substr(md5(microtime()), -8)) & 0x7fffffff);
         for ($i = 0; $i < $size; $i++) {
             $this->$varname .= pack('C', 1 + mt_rand() % 255);
         }
