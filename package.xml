@@ -20,25 +20,24 @@ For MS-CHAP the mhash and mcrypt extensions must be loaded.
   <email>mbretter@php.net</email>
   <active>yes</active>
  </lead>
- <date>2009-08-28</date>
+ <date>2010-08-28</date>
  <time>11:21:27</time>
  <version>
-  <release>1.0.2</release>
-  <api>1.0.2</api>
+  <release>1.5.0</release>
+  <api>1.5.0</api>
  </version>
  <stability>
   <release>stable</release>
   <api>stable</api>
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD</license>
- <notes>* remove mt_srand() security fix
-
-      
+ <notes>* switch from mhash to  hash
+* use real .phpt for tests
  </notes>
  <contents>
   <dir name="/">
    <dir name="tests">
-    <file baseinstalldir="Crypt" name="chaptest.php" role="test" />
+    <file baseinstalldir="Crypt" name="Crypt_CHAP.phpt" role="test" />
    </dir> <!-- //tests -->
    <file baseinstalldir="Crypt" name="CHAP.php" role="php" />
   </dir> <!-- / -->
@@ -47,7 +46,7 @@ For MS-CHAP the mhash and mcrypt extensions must be loaded.
 
   <required>
    <php>
-    <min>4.0.0</min>
+    <min>5.1.2</min>
    </php>
    <pearinstaller>
     <min>1.4.0b1</min>
@@ -56,7 +55,7 @@ For MS-CHAP the mhash and mcrypt extensions must be loaded.
 
   <optional>
    <extension>
-    <name>mhash</name>
+    <name>hash</name>
    </extension>
    <extension>
     <name>mcrypt</name>
@@ -68,19 +67,17 @@ For MS-CHAP the mhash and mcrypt extensions must be loaded.
  <changelog>
   <release>
    <version>
-    <release>0.8.2</release>
-    <api>0.8.2</api>
+    <release>1.5.0</release>
+    <api>1.5.0</api>
    </version>
    <stability>
     <release>alpha</release>
     <api>alpha</api>
    </stability>
-   <date>2003-02-01</date>
+   <date>2010-08-28</date>
    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD</license>
-   <notes>* CHAP-MD5 is stable
-* MS-CHAP is currently not completely implemented 
-
-      
+   <notes>* switch from mhash to hash
+* use real .phpt for tests
    </notes>
   </release>
  </changelog>
